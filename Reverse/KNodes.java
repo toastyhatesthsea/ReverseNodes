@@ -22,6 +22,8 @@ public class KNodes
                 end = current.next;
             }
 
+            //Must keep track of next node
+
         }
 
 
@@ -30,13 +32,20 @@ public class KNodes
 
     public void reverse(int amount, ListNode beg, ListNode end)
     {
-        if (amount == 1)
+        if (beg.next == end)
         {
+            ListNode endNext = end.next;
             end.next = beg;
         }
         else
         {
+            ListNode endNext = end.next;
+            ListNode newBeg = beg.next;
 
+            end.next = beg;
+            beg.next = endNext;
+
+            reverse(amount - 1, newBeg, end);
         }
     }
 
