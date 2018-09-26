@@ -1,7 +1,5 @@
 package Reverse;
 
-import Swaps.SwapNode;
-
 
 public class KNodes
 {
@@ -30,12 +28,13 @@ public class KNodes
         return answer;
     }
 
-    public void reverse(int amount, ListNode beg, ListNode end)
+    public void reverse(ListNode beg, ListNode end)
     {
         if (beg.next == end)
         {
             ListNode endNext = end.next;
             end.next = beg;
+            beg.next = endNext;
         }
         else
         {
@@ -45,7 +44,7 @@ public class KNodes
             end.next = beg;
             beg.next = endNext;
 
-            reverse(amount - 1, newBeg, end);
+            reverse(newBeg, end);
         }
     }
 
@@ -68,13 +67,16 @@ class KNodesTesters
 
     public static void main(String[] agsg)
     {
-        SwapNode blahs = new SwapNode();
 
         ListNode l1 = new ListNode(1);
         l1.next = new ListNode(2);
         l1.next.next = new ListNode(3);
         l1.next.next.next = new ListNode(4);
         l1.next.next.next.next = new ListNode(5);
+
+        KNodes aK = new KNodes();
+
+        aK.reverse(l1, l1.next.next.next.next);
 
     }
 }
