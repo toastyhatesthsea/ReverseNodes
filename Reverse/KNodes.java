@@ -6,10 +6,8 @@ public class KNodes
 
     public ListNode reverseKGroup(ListNode head, int k)
     {
-        ListNode answer = head;
-        ListNode current = head;
-        ListNode previous = head;
-        ListNode end, beginning;
+        ListNode end = head , beginning = head, answer = head, current = head, previous = head;
+        boolean first = true;
 
         while (current != null)
         {
@@ -17,9 +15,22 @@ public class KNodes
 
             for(int i=0; i<k && current != null; i++)
             {
-                end = current.next;
+                end = current;
+                current = current.next;
             }
 
+            //TODO Need to change code to make sure nodes are not missing
+            //FIXME In the second pass, the last node goes missing
+            if (end != null)
+            {
+                reverse(beginning, end);
+                if (first)
+                {
+                    answer = end;
+                    first = false;
+                }
+            }
+            previous = end;
             //Must keep track of next node
 
         }
@@ -74,9 +85,16 @@ class KNodesTesters
         l1.next.next.next = new ListNode(4);
         l1.next.next.next.next = new ListNode(5);
 
+        ListNode l2 = new ListNode(2);
+        l2.next = new ListNode(3);
+        l2.next.next = new ListNode(4);
+        l2.next.next.next = new ListNode(5);
+        l2.next.next.next.next = new ListNode(7);
+        l2.next.next.next.next.next = new ListNode(9);
+
         KNodes aK = new KNodes();
 
-        aK.reverse(l1, l1.next.next.next.next);
+        aK.reverseKGroup(l1, 2);
 
     }
 }
