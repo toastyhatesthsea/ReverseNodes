@@ -13,24 +13,36 @@ public class KNodes
         {
             beginning = current;
 
-            for(int i=0; i<k && current != null; i++)
+            for(int i=1; i<k && current != null; i++)
             {
-                end = current;
                 current = current.next;
+                end = current;
             }
 
             //TODO Need to change code to make sure nodes are not missing
             //FIXME In the second pass, the last node goes missing
             if (end != null)
             {
-                reverse(beginning, end);
+                ListNode theEnd = reverse(beginning, end);
+                //previous.next = end;
                 if (first)
                 {
                     answer = end;
                     first = false;
                 }
+                else
+                {
+                    previous.next = end;
+                }
             }
-            previous = end;
+            else
+            {
+                break;
+            }
+            //previous = end;
+            //current = current.next;
+            current = beginning.next;
+            previous = beginning;
             //Must keep track of next node
 
         }
@@ -39,13 +51,14 @@ public class KNodes
         return answer;
     }
 
-    public void reverse(ListNode beg, ListNode end)
+    public ListNode reverse(ListNode beg, ListNode end)
     {
         if (beg.next == end)
         {
             ListNode endNext = end.next;
             end.next = beg;
             beg.next = endNext;
+            return beg;
         }
         else
         {
@@ -55,7 +68,7 @@ public class KNodes
             end.next = beg;
             beg.next = endNext;
 
-            reverse(newBeg, end);
+            return reverse(newBeg, end);
         }
     }
 
@@ -81,9 +94,14 @@ class KNodesTesters
 
         ListNode l1 = new ListNode(1);
         l1.next = new ListNode(2);
+
+        ListNode answer = aK.reverseKGroup(l1, 3);
+
+
         l1.next.next = new ListNode(3);
         l1.next.next.next = new ListNode(4);
         l1.next.next.next.next = new ListNode(5);
+        l1.next.next.next.next.next = new ListNode(6);
 
         ListNode l2 = new ListNode(2);
         l2.next = new ListNode(3);
@@ -92,9 +110,10 @@ class KNodesTesters
         l2.next.next.next.next = new ListNode(7);
         l2.next.next.next.next.next = new ListNode(9);
 
+        l1.next.next.next.next.next.next = l2;
+
         KNodes aK = new KNodes();
 
-        aK.reverseKGroup(l1, 2);
 
     }
 }
